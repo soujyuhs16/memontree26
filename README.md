@@ -47,6 +47,8 @@ memontree26/
 ├── build_multilabel_dataset.py  # 数据集构建脚本
 ├── train_multilabel.py          # 模型训练脚本
 ├── app.py                        # Streamlit演示应用
+├── verify_system.py              # 系统验证脚本
+├── example_batch.csv             # 批量预测示例文件
 ├── requirements.txt              # Python依赖
 └── README.md                     # 本文件
 ```
@@ -58,6 +60,7 @@ memontree26/
 **系统要求：**
 - Python 3.8+
 - 推荐使用GPU（V100或更高）进行训练，CPU也可运行但较慢
+- 需要互联网连接以下载预训练模型（首次运行训练时）
 
 **安装依赖：**
 
@@ -72,6 +75,16 @@ pip install -r requirements.txt
 - pandas: 数据处理
 - streamlit: Web应用框架
 - scikit-learn: 评估指标
+
+**验证系统配置：**
+
+在开始之前，建议运行系统验证脚本检查所有依赖和文件：
+
+```bash
+python verify_system.py
+```
+
+该脚本会检查：Python版本、依赖包、数据集文件、脚本文件、目录结构和GPU支持。
 
 ### 2. 数据准备
 
@@ -139,9 +152,10 @@ python train_multilabel.py
 - **混合精度**: FP16 (如果有GPU)
 
 训练过程会：
-1. 加载并分割数据集（训练/验证/测试）
-2. 进行多标签分类训练
-3. 每个epoch后在验证集上评估
+1. 首次运行时自动从Hugging Face下载预训练模型（约400MB）
+2. 加载并分割数据集（训练/验证/测试）
+3. 进行多标签分类训练
+4. 每个epoch后在验证集上评估
 4. 保存最佳模型到 `outputs/best_model/`
 5. 在测试集上进行最终评估
 6. 生成训练报告 `outputs/training_report.txt`
@@ -180,7 +194,7 @@ streamlit run app.py
 
 ### 批量文本审核
 
-1. 准备包含 `text` 列的CSV文件
+1. 准备包含 `text` 列的CSV文件（可参考 `example_batch.csv`）
 2. 在"批量预测"标签页上传文件
 3. 点击"开始批量审核"
 4. 等待处理完成
