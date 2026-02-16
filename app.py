@@ -80,7 +80,7 @@ def apply_rules(text):
             break
     
     # 检测辱骂关键词
-    abuse_keywords = ['傻逼', '傻逼', '去死', '垃圾', '废物', '蠢货', '白痴']
+    abuse_keywords = ['傻逼', '去死', '垃圾', '废物', '蠢货', '白痴']
     for keyword in abuse_keywords:
         if keyword in text:
             matched_rules.append(f"检测到辱骂词: {keyword}")

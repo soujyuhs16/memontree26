@@ -153,20 +153,21 @@ def main():
     
     # Tokenize数据集
     print("\nTokenizing datasets...")
+    columns_to_remove = ['text'] + LABEL_NAMES
     train_dataset = train_dataset.map(
         lambda x: tokenize_function(x, tokenizer, max_length),
         batched=True,
-        remove_columns=['text'] + LABEL_NAMES
+        remove_columns=columns_to_remove
     )
     val_dataset = val_dataset.map(
         lambda x: tokenize_function(x, tokenizer, max_length),
         batched=True,
-        remove_columns=['text'] + LABEL_NAMES
+        remove_columns=columns_to_remove
     )
     test_dataset = test_dataset.map(
         lambda x: tokenize_function(x, tokenizer, max_length),
         batched=True,
-        remove_columns=['text'] + LABEL_NAMES
+        remove_columns=columns_to_remove
     )
     
     # 设置训练参数
