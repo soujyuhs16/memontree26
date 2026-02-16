@@ -49,7 +49,7 @@ def apply_rules(text):
     rule_scores = {label: 0.0 for label in LABEL_NAMES}
     
     # URL检测
-    url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    url_pattern = r'https?://[^\s]+'
     if re.search(url_pattern, text):
         matched_rules.append("检测到URL链接")
         rule_scores['abuse'] += 0.1  # 可能是垃圾信息
